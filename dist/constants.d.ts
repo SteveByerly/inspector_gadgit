@@ -1,0 +1,11 @@
+export declare const CLI_COMMAND = "gogo-gadgit";
+export declare const CLI_VERSION = "0.1.0";
+export declare const USER_AGENT = "https://github.com/stevebyerly/inspector_gadgit";
+export declare const GITHUB_API_BASE = "https://api.github.com";
+export declare const GITHUB_API_VERSION = "v3";
+export declare const GITHUB_RAW_BASE = "https://raw.githubusercontent.com";
+export declare const GITHUB_SCHEMA_OWNER = "github";
+export declare const GITHUB_SCHEMA_REPO = "rest-api-description";
+export declare const GITHUB_SCHEMA_PATH = "descriptions/api.github.com/api.github.com.json";
+export declare const DEFAULT_SCHEMA_PATH: string;
+export declare const DEFAULT_TYPES_PATH: string;

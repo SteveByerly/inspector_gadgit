@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RepositoryService = exports.PullRequestService = exports.OrganizationService = exports.GitHubService = void 0;
+var service_1 = require("./service");
+Object.defineProperty(exports, "GitHubService", { enumerable: true, get: function () { return service_1.GitHubService; } });
+var organizations_1 = require("./organizations");
+Object.defineProperty(exports, "OrganizationService", { enumerable: true, get: function () { return organizations_1.OrganizationService; } });
+var pull_requests_1 = require("./pull-requests");
+Object.defineProperty(exports, "PullRequestService", { enumerable: true, get: function () { return pull_requests_1.PullRequestService; } });
+var repositories_1 = require("./repositories");
+Object.defineProperty(exports, "RepositoryService", { enumerable: true, get: function () { return repositories_1.RepositoryService; } });

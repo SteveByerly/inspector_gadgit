@@ -1,0 +1,13 @@
+export declare type APISchemaInt32 = number;
+export declare type APISchemaInt64 = number;
+export declare type APISchemaFloat = number;
+export declare type APISchemaDouble = number;
+export declare type APISchemaByte = string;
+export declare type APISchemaBinary = string;
+export declare type APISchemaDate = string;
+export declare type APISchemaDateTime = string;
+export declare type APISchemaTimestamp = number;
+export declare type APISchemaURI = string;
+export declare type APISchemaURITemplate = string;
+export declare type APISchemaEmail = string;
+export declare type APISchemaPassword = string;

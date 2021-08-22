@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DEFAULT_TYPES_PATH = exports.DEFAULT_SCHEMA_PATH = exports.GITHUB_SCHEMA_PATH = exports.GITHUB_SCHEMA_REPO = exports.GITHUB_SCHEMA_OWNER = exports.GITHUB_RAW_BASE = exports.GITHUB_API_VERSION = exports.GITHUB_API_BASE = exports.USER_AGENT = exports.CLI_VERSION = exports.CLI_COMMAND = void 0;
+const path = require("path");
+exports.CLI_COMMAND = 'gogo-gadgit';
+exports.CLI_VERSION = '0.1.0';
+exports.USER_AGENT = 'https://github.com/stevebyerly/inspector_gadgit';
+exports.GITHUB_API_BASE = 'https://api.github.com';
+exports.GITHUB_API_VERSION = 'v3';
+exports.GITHUB_RAW_BASE = 'https://raw.githubusercontent.com';
+exports.GITHUB_SCHEMA_OWNER = 'github';
+exports.GITHUB_SCHEMA_REPO = 'rest-api-description';
+exports.GITHUB_SCHEMA_PATH = 'descriptions/api.github.com/api.github.com.json';
+exports.DEFAULT_SCHEMA_PATH = path.resolve(__dirname, './schemas/github-rest-api.json');
+exports.DEFAULT_TYPES_PATH = path.resolve(__dirname, './schemas/github-rest-api.ts');
