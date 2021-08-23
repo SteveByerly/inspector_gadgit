@@ -1,5 +1,4 @@
 // Lib
-import * as chalk from 'chalk';
 import { createWriteStream } from 'fs';
 import * as fs from 'fs/promises';
 import type { PipelineSource } from 'stream';
@@ -7,6 +6,9 @@ import { pipeline } from 'stream/promises';
 import { default as got } from 'got';
 // App
 import { PathExistsError } from '../errors';
+import { Logger } from './logging';
+
+const logger = new Logger('file utils');
 
 export const pathExists = async (path: string): Promise<boolean> => {
   try {
@@ -25,7 +27,7 @@ export const writeFile = async <T>(filepath: string, source: PipelineSource<T>, 
       throw new PathExistsError(filepath);
     }
 
-    console.log(chalk.yellow(`Overwriting file: ${filepath}`));
+    logger.warning(`Overwriting file: ${filepath}`);
   }
 
   const dest = createWriteStream(filepath);

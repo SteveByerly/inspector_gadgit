@@ -7,6 +7,7 @@ import {
 // App
 import { AppError } from '../errors';
 import type { UrlLike } from '../types';
+import { Logger } from '../utils';
 import {
   logRequest,
   logRetry,
@@ -34,8 +35,11 @@ interface HttpClientParams {
 export class HttpClient {
   public defaultBackoff = 1000;
   private readonly _instance: GotInstance;
+  private readonly _logger: Logger;
 
   constructor(params: HttpClientParams) {
+    this._logger = new Logger(new.target.name);
+
     const {
       baseUrl: prefixUrl,
       headers,
@@ -49,10 +53,10 @@ export class HttpClient {
       hooks: {
         beforeError: [],
         beforeRequest: [
-          logRequest,
+          logRequest(this._logger),
         ],
         beforeRetry: [
-          logRetry,
+          logRetry(this._logger),
         ],
       },
     });

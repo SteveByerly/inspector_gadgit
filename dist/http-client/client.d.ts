@@ -9,6 +9,7 @@ interface HttpClientParams {
 export declare class HttpClient {
     defaultBackoff: number;
     private readonly _instance;
+    private readonly _logger;
     constructor(params: HttpClientParams);
     get internalClient(): GotInstance;
     handleError(error: Error | RequestError): never;

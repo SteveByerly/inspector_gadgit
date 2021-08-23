@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateApiSchemaTypes = exports.downloadApiSchema = exports.toInteger = exports.toFloat = exports.isString = exports.isNumber = exports.getLogTimestamp = exports.writeFile = exports.pathExists = exports.downloadFile = void 0;
+exports.generateApiSchemaTypes = exports.downloadApiSchema = exports.toInteger = exports.toFloat = exports.isString = exports.isNumber = exports.Logger = exports.writeFile = exports.pathExists = exports.downloadFile = void 0;
 var files_1 = require("./files");
 Object.defineProperty(exports, "downloadFile", { enumerable: true, get: function () { return files_1.downloadFile; } });
 Object.defineProperty(exports, "pathExists", { enumerable: true, get: function () { return files_1.pathExists; } });
 Object.defineProperty(exports, "writeFile", { enumerable: true, get: function () { return files_1.writeFile; } });
 var logging_1 = require("./logging");
-Object.defineProperty(exports, "getLogTimestamp", { enumerable: true, get: function () { return logging_1.getLogTimestamp; } });
+Object.defineProperty(exports, "Logger", { enumerable: true, get: function () { return logging_1.Logger; } });
 var parsing_1 = require("./parsing");
 Object.defineProperty(exports, "isNumber", { enumerable: true, get: function () { return parsing_1.isNumber; } });
 Object.defineProperty(exports, "isString", { enumerable: true, get: function () { return parsing_1.isString; } });

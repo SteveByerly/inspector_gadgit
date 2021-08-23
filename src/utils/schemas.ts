@@ -13,6 +13,9 @@ import {
   GITHUB_SCHEMA_REPO,
 } from '../constants';
 import { writeFile } from './files';
+import { Logger } from './logging';
+
+const logger = new Logger('file utils');
 
 export interface ContentUrlParams {
   filePath: string
@@ -46,7 +49,9 @@ export const getApiSchemaUrl = (treeIsh = 'main'): string => (
 export const downloadApiSchema = async (filepath: string, overwrite = false, treeIsh = 'main'): Promise<void> => {
   const schemaUrl = getApiSchemaUrl(treeIsh);
   const input = got.stream(schemaUrl);
-  console.log(`Downloading schema: ${schemaUrl}`);
+
+  logger.info(`Downloading schema: ${schemaUrl}`);
+
   await writeFile(filepath, input, overwrite);
 };
 
@@ -55,7 +60,8 @@ export const generateApiSchemaTypes = async (schemaPath: string, typesPath: stri
     immutableTypes: true,
   };
 
-  console.log(`Generating types: ${schemaPath}`);
+  logger.info(`Generating types: ${schemaPath}`);
+
   const result = await openapiTS(schemaPath, schemaOptions);
   await writeFile(typesPath, result, overwrite);
 };

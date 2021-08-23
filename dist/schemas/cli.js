@@ -10,6 +10,7 @@ const getSchemaCommand = () => {
     command
         .name('schema')
         .description('Update the OpenAPI schema and TypeScript typings')
+        .showHelpAfterError(true)
         .option('--overwrite', 'Overwrite existing files', false);
     command
         .command('download')

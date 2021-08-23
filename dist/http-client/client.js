@@ -3,10 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HttpClient = void 0;
 const got_1 = require("got");
 const errors_1 = require("../errors");
+const utils_1 = require("../utils");
 const handlers_1 = require("./handlers");
 class HttpClient {
     constructor(params) {
         this.defaultBackoff = 1000;
+        this._logger = new utils_1.Logger(new.target.name);
         const { baseUrl: prefixUrl, headers, responseType = 'json', } = params;
         this._instance = got_1.default.extend({
             headers,
@@ -15,10 +17,10 @@ class HttpClient {
             hooks: {
                 beforeError: [],
                 beforeRequest: [
-                    handlers_1.logRequest,
+                    handlers_1.logRequest(this._logger),
                 ],
                 beforeRetry: [
-                    handlers_1.logRetry,
+                    handlers_1.logRetry(this._logger),
                 ],
             },
         });

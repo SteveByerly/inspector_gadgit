@@ -4,7 +4,7 @@ export {
   writeFile,
 } from './files';
 export {
-  getLogTimestamp,
+  Logger,
 } from './logging';
 export {
   isNumber,

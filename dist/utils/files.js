@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.downloadFile = exports.writeFile = exports.pathExists = void 0;
-const chalk = require("chalk");
 const fs_1 = require("fs");
 const fs = require("fs/promises");
 const promises_1 = require("stream/promises");
 const got_1 = require("got");
 const errors_1 = require("../errors");
+const logging_1 = require("./logging");
+const logger = new logging_1.Logger('file utils');
 const pathExists = async (path) => {
     try {
         await fs.access(path);
@@ -23,7 +24,7 @@ const writeFile = async (filepath, source, overwrite = false) => {
         if (overwrite !== true) {
             throw new errors_1.PathExistsError(filepath);
         }
-        console.log(chalk.yellow(`Overwriting file: ${filepath}`));
+        logger.warning(`Overwriting file: ${filepath}`);
     }
     const dest = fs_1.createWriteStream(filepath);
     await promises_1.pipeline(source, dest);

@@ -1,5 +1,4 @@
 // Lib
-import * as chalk from 'chalk';
 import type {
   BeforeRequestHook,
   BeforeRetryHook,
@@ -10,19 +9,17 @@ import { URL } from 'url';
 // App
 import { ApiError } from '../errors';
 import type { Dict } from '../types';
-import { getLogTimestamp } from '../utils';
+import type { Logger } from '../utils';
 import type { Response } from './types';
 
-export const logRequest: BeforeRequestHook = (options) => {
-  const requestTime = getLogTimestamp();
-  const message = `[${requestTime}] [${options.method}] ${options.url}`;
-  console.info(chalk.yellow(message));
+export const logRequest = (logger: Logger): BeforeRequestHook => (options) => {
+  const message = `[${options.method}] ${options.url}`;
+  logger.info(message);
 };
 
-export const logRetry: BeforeRetryHook = (_options, error, retryCount) => {
-  const requestTime = getLogTimestamp();
-  const message = `[${requestTime}] [${error?.response?.statusCode}] Attempt ${retryCount}`;
-  console.warn(chalk.yellow(message));
+export const logRetry = (logger: Logger): BeforeRetryHook => (_options, error, retryCount) => {
+  const message = `[${error?.response?.statusCode}] Attempt ${retryCount}`;
+  logger.warning(message);
 };
 
 export const parseLibError = (originalError: RequestError): ApiError => {

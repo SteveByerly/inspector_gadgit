@@ -1,6 +1,6 @@
 // Lib
 import * as chalk from 'chalk';
-import { Command } from 'commander';
+import { Command, CommanderError } from 'commander';
 // App
 import {
   CLI_COMMAND,
@@ -8,9 +8,37 @@ import {
 } from './constants';
 import { getApiCommand } from './rest-api/cli';
 import { getSchemaCommand } from './schemas/cli';
+import type { Maybe } from './types';
 import {
-  getLogTimestamp,
+  Logger,
 } from './utils';
+
+const logger = new Logger(CLI_COMMAND);
+
+const handleExit = (error: CommanderError | Error | string) => {
+  let exitCode = 1;
+  let parsedError: Maybe<string | Error> = error;
+  let logMessage: Maybe<string>;
+
+  if (error instanceof CommanderError) {
+    exitCode = error.exitCode;
+    logMessage = error.message;
+    parsedError = error.nestedError;
+
+    if (!error.code.startsWith('commander.help')) {
+      cliApp.outputHelp({ error: true });
+    }
+  }
+
+  if (parsedError instanceof Error) {
+    logger.error(parsedError.message, parsedError.stack);
+  } else {
+    logMessage = parsedError ?? 'Unknown error';
+    logger.error(logMessage, null);
+  }
+
+  process.exit(exitCode);
+};
 
 export const cliApp = new Command();
 
@@ -27,12 +55,4 @@ cliApp
 
 cliApp.parseAsync(process.argv)
   .then(() => process.exit(0))
-  .catch(error => {
-    const errorTime = getLogTimestamp();
-    const message = `[${errorTime}] ${error.message}`;
-    console.error(chalk.red(message));
-
-    if (cliApp.getOptionValue('verbose')) {
-      console.error(chalk.red(error.stack));
-    }
-  });
+  .catch(handleExit);

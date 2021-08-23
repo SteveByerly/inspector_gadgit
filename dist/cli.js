@@ -7,6 +7,28 @@ const constants_1 = require("./constants");
 const cli_1 = require("./rest-api/cli");
 const cli_2 = require("./schemas/cli");
 const utils_1 = require("./utils");
+const logger = new utils_1.Logger(constants_1.CLI_COMMAND);
+const handleExit = (error) => {
+    let exitCode = 1;
+    let parsedError = error;
+    let logMessage;
+    if (error instanceof commander_1.CommanderError) {
+        exitCode = error.exitCode;
+        logMessage = error.message;
+        parsedError = error.nestedError;
+        if (!error.code.startsWith('commander.help')) {
+            exports.cliApp.outputHelp({ error: true });
+        }
+    }
+    if (parsedError instanceof Error) {
+        logger.error(parsedError.message, parsedError.stack);
+    }
+    else {
+        logMessage = parsedError ?? 'Unknown error';
+        logger.error(logMessage, null);
+    }
+    process.exit(exitCode);
+};
 exports.cliApp = new commander_1.Command();
 exports.cliApp
     .name(constants_1.CLI_COMMAND)
@@ -20,11 +42,4 @@ exports.cliApp
     .addCommand(cli_2.getSchemaCommand());
 exports.cliApp.parseAsync(process.argv)
     .then(() => process.exit(0))
-    .catch(error => {
-    const errorTime = utils_1.getLogTimestamp();
-    const message = `[${errorTime}] ${error.message}`;
-    console.error(chalk.red(message));
-    if (exports.cliApp.getOptionValue('verbose')) {
-        console.error(chalk.red(error.stack));
-    }
-});
+    .catch(handleExit);

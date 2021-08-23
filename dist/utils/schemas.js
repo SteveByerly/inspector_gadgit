@@ -6,6 +6,8 @@ const openapi_typescript_1 = require("openapi-typescript");
 const url_1 = require("url");
 const constants_1 = require("../constants");
 const files_1 = require("./files");
+const logging_1 = require("./logging");
+const logger = new logging_1.Logger('file utils');
 const buildRawContentUrl = (params) => {
     const { filePath, repoName, repoOwner, treeIsh, } = params;
     const pathname = `/${repoOwner}/${repoName}/${treeIsh}/${filePath}`;
@@ -23,7 +25,7 @@ exports.getApiSchemaUrl = getApiSchemaUrl;
 const downloadApiSchema = async (filepath, overwrite = false, treeIsh = 'main') => {
     const schemaUrl = exports.getApiSchemaUrl(treeIsh);
     const input = got_1.default.stream(schemaUrl);
-    console.log(`Downloading schema: ${schemaUrl}`);
+    logger.info(`Downloading schema: ${schemaUrl}`);
     await files_1.writeFile(filepath, input, overwrite);
 };
 exports.downloadApiSchema = downloadApiSchema;
@@ -31,7 +33,7 @@ const generateApiSchemaTypes = async (schemaPath, typesPath, overwrite = false) 
     const schemaOptions = {
         immutableTypes: true,
     };
-    console.log(`Generating types: ${schemaPath}`);
+    logger.info(`Generating types: ${schemaPath}`);
     const result = await openapi_typescript_1.default(schemaPath, schemaOptions);
     await files_1.writeFile(typesPath, result, overwrite);
 };

@@ -1,20 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.paginatePatch = exports.parseLibError = exports.logRetry = exports.logRequest = void 0;
-const chalk = require("chalk");
 const url_1 = require("url");
 const errors_1 = require("../errors");
-const utils_1 = require("../utils");
-const logRequest = (options) => {
-    const requestTime = utils_1.getLogTimestamp();
-    const message = `[${requestTime}] [${options.method}] ${options.url}`;
-    console.info(chalk.yellow(message));
+const logRequest = (logger) => (options) => {
+    const message = `[${options.method}] ${options.url}`;
+    logger.info(message);
 };
 exports.logRequest = logRequest;
-const logRetry = (_options, error, retryCount) => {
-    const requestTime = utils_1.getLogTimestamp();
-    const message = `[${requestTime}] [${error?.response?.statusCode}] Attempt ${retryCount}`;
-    console.warn(chalk.yellow(message));
+const logRetry = (logger) => (_options, error, retryCount) => {
+    const message = `[${error?.response?.statusCode}] Attempt ${retryCount}`;
+    logger.warning(message);
 };
 exports.logRetry = logRetry;
 const parseLibError = (originalError) => {

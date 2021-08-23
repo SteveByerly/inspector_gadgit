@@ -32,10 +32,11 @@ export const getOrgsCommand = (): Command => {
   command
     .name('orgs')
     .description('Get information about Organizations')
+    .showHelpAfterError(true)
     .option('--authToken <token>', 'GitHub personal access token');
 
   command
-    .command('list', { isDefault: true })
+    .command('list')
     .description('List Organiztions')
     .action(async () => {
       const svc = buildService();
@@ -75,6 +76,7 @@ export const getPullsCommand = (): Command => {
   command
     .name('pulls')
     .description('Get information about Pull Requests')
+    .showHelpAfterError(true)
     .option('--authToken <token>', 'GitHub personal access token');
 
   command
@@ -95,7 +97,7 @@ export const getPullsCommand = (): Command => {
 
       if (searchParams.count) {
         const result = await svc.count(searchParams);
-        console.log(result);
+        console.log(`Totel Count: ${result}`);
         return;
       }
 

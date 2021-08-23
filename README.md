@@ -65,9 +65,7 @@ for await (const pullRequest of paginator) {
 The `http-client` module provides an `HttpClient` class for managing HTTP requests, with the majority of functionality coming from the [Got](https://github.com/sindresorhus/got) library. The goal of this module is to provide a decoupled interface that lets us define our own interface and overlay typings that may be better-suited for our usage.
 
 ``` typescript
-import { PullRequestService } from 'inspector_gadgit';
-
-const service = new PullRequestService({ authToken: 'ghp_abcd1234' });
+import { HttpClient } from 'inspector_gadgit';
 
 const client = new HttpClient({
   baseUrl: 'https://api.github.com',
@@ -156,7 +154,7 @@ npx gogo-gadgit schema generate
 
 ## API
 
-Download versions of the GitHub OpenAPI schema and generate a TypeScript typings file
+Run queries against the GitHub REST API
 
 ```sh
 npx gogo-gadgit api --help
@@ -211,4 +209,4 @@ npx gogo-gadgit api pulls search -q org:ramda --count
 | search | `--authToken <token>` | - | GitHub personal access token |
 | | `--count` | `false` | Get the count of search results |
 | | `--term <term>` | - | Search term |
-| | `-q, --qualifiers <qualifiers...>` | - | Search qualifiers |
+| | `-q, --qualifiers <qualifiers...>` | `[]` | Search qualifiers |
